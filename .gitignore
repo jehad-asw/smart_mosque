@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+.venv/
+venv/
+.env
+
+# VSCode or JetBrains IDEs
+.idea/
+.vscode/
+
+# Alembic
+alembic/versions/*.pyc
+
+# DB
+*.sqlite3
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
