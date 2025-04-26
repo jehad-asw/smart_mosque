@@ -1,25 +1,62 @@
-# Smart Mosque - Educational Management System
+# Educational and Quranic Institutes Management System
 
-A modern web application for managing educational activities in mosques, including teacher and student management with role-based access control.
+A comprehensive platform for managing educational activities in Islamic institutes and Quranic centers, inspired by the Furqan System. This system provides complete management for centers, teachers, students, study circles, attendance, tests, and financial operations.
+
+## Project Vision
+
+Develop an integrated management system that meets the needs of educational and Quranic institutes, facilitates administrative and educational processes, and provides an interactive environment connecting all stakeholders (administration, teachers, students).
 
 ## Features
 
-- **User Authentication**: Secure login and registration with JWT token-based authentication
-- **Role-Based Access Control**: Different access levels for administrators, teachers, and students
-- **Teacher Management**: Complete CRUD operations for teacher records
-- **Student Management**: Track and manage student information and classes
-- **RESTful API**: Well-structured API endpoints following REST principles
-- **Database Integration**: Persistent storage with SQLAlchemy ORM
+### User and Access Management
+- **Multi-level User System**: Support for administrators, center managers, teachers, students, and staff
+- **Role-based Access Control**: Granular permissions system for different user roles
+- **Authentication**: Secure login and registration with token-based authentication
 
-## Technology Stack
+### Educational Management
+- **Centers Management**: Register and manage multiple educational centers
+- **Teacher Management**: Track teacher qualifications, schedules, and performance
+- **Student Management**: Comprehensive student profiles with academic progress tracking
+- **Study Circles**: Create and manage individual or group-based study circles
+- **Attendance Tracking**: Record and monitor student attendance
+- **Educational Projects**: Assign and track educational projects and curricula
 
-- **Backend**: FastAPI (Python)
-- **Database**: PostgreSQL (production) / SQLite (development)
-- **ORM**: SQLAlchemy
-- **Authentication**: JWT tokens with python-jose
-- **Password Hashing**: Passlib with bcrypt
-- **Database Migrations**: Alembic
-- **API Documentation**: Swagger UI and ReDoc (auto-generated)
+### Assessment and Certification
+- **Testing System**: Create, conduct, and grade tests
+- **Test Requests**: Process student and teacher test requests
+- **Cards and Certificates**: Issue and manage student ID cards and certificates
+
+### Financial Operations
+- **Subscription Management**: Track student payments and subscriptions
+- **Salary Management**: Process teacher and staff salaries
+- **Financial Transactions**: Record and report on all financial activities
+
+### Communication
+- **Notification System**: Send automated notifications to users
+- **Parent Portal**: Allow parents to monitor their children's progress
+
+## Planned Technology Stack
+
+### Backend
+- **Framework**: Django with Django REST Framework
+- **Database**: PostgreSQL for scalable data storage
+- **Authentication**: Django's built-in authentication with JWT tokens
+- **API**: RESTful API design following best practices
+
+### Frontend
+- **Framework**: React with functional components
+- **UI Library**: Material-UI for consistent styling
+- **State Management**: React hooks (useState, useEffect)
+- **API Communication**: Axios for backend requests
+
+## Current Implementation Status
+
+The current repository contains a FastAPI-based backend prototype with the following components:
+
+- Basic user authentication with JWT
+- Teacher and student management
+- SQLAlchemy ORM for database operations
+- Alembic for database migrations
 
 ## Project Structure
 
@@ -41,13 +78,18 @@ smart_mosque/
 │   │   ├── teacher.py   # Teacher model
 │   │   └── student.py   # Student model
 │   └── schemas/         # Pydantic schemas for validation
+├── requirements/        # Project requirements and planning documents
+│   ├── AIRules/         # Development guidelines
+│   ├── ERD/             # Entity Relationship Diagrams
+│   ├── TODO/            # Development task lists
+│   └── systemTechnologies/ # Technology stack documentation
 ├── .env                 # Environment variables (not in version control)
 ├── alembic.ini          # Alembic configuration
 ├── create_db.py         # Database initialization script
 └── docker-compose.yml   # Docker configuration for PostgreSQL
 ```
 
-## Getting Started
+## Getting Started with the Current Backend
 
 ### Prerequisites
 
@@ -123,56 +165,42 @@ smart_mosque/
    - Swagger UI documentation: http://127.0.0.1:8000/docs
    - ReDoc documentation: http://127.0.0.1:8000/redoc
 
-## API Endpoints
+## Development Roadmap
 
-### Authentication
+### Phase 1: Backend Development
+- Complete Django REST Framework setup
+- Implement all database models according to ERD
+- Develop authentication and permission system
+- Create API endpoints for core functionality
 
-- `POST /token` - Login and get access token
-- `POST /users/` - Register a new user
+### Phase 2: Frontend Development
+- Set up React application with Material-UI
+- Implement authentication flows
+- Build dashboard and entity management interfaces
+- Create forms for all CRUD operations
 
-### Teachers
+### Phase 3: Integration and Testing
+- Connect frontend to backend APIs
+- Implement real-time notifications
+- Conduct user testing and gather feedback
+- Fix bugs and optimize performance
 
-- `GET /teachers/` - List all teachers
-- `POST /teachers/` - Create a new teacher
-- `GET /teachers/{id}` - Get a specific teacher
-- `PUT /teachers/{id}` - Update a teacher
-- `DELETE /teachers/{id}` - Delete a teacher
+## Development Guidelines
 
-### Students
+### Backend (Current FastAPI / Planned Django)
+- Follow RESTful conventions for API routes
+- Use ORM for all database queries; avoid raw SQL
+- Name variables and functions in snake_case
+- Store sensitive data in environment variables
+- Implement logging for key operations
 
-- `GET /students/` - List all students
-- `POST /students/` - Create a new student
-- `GET /students/{id}` - Get a specific student
-- `PUT /students/{id}` - Update a student
-- `DELETE /students/{id}` - Delete a student
-
-## Development
-
-### Database Migrations
-
-To create a new migration after model changes:
-
-```bash
-alembic revision --autogenerate -m "Description of changes"
-```
-
-To apply migrations:
-
-```bash
-alembic upgrade head
-```
-
-## Security
-
-- JWT token-based authentication
-- Password hashing with bcrypt
-- Role-based access control
-- Environment variables for sensitive information
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Frontend (Planned React)
+- Use functional components with React hooks
+- Prefer Material-UI for styling; avoid custom CSS
+- Use Axios for all API requests
+- Name variables and functions in camelCase
+- Follow ES6+ syntax best practices
 
 ## Contributors
 
-- Your Name - Initial work
+- Initial development team
