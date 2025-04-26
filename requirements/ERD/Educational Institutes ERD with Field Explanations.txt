@@ -1,0 +1,230 @@
+erDiagram
+    USER ||--o{ CENTER : manages
+    CENTER ||--o{ TEACHER : employs
+    CENTER ||--o{ STUDENT : enrolls
+    CENTER ||--o{ STAFF : employs
+    TEACHER ||--o{ STUDY_CIRCLE : leads
+    STUDY_CIRCLE ||--o{ CIRCLE_STUDENT : includes
+    STUDENT ||--o{ CIRCLE_STUDENT : joins
+    STUDY_CIRCLE ||--o{ ATTENDANCE : tracks
+    STUDENT ||--o{ ATTENDANCE : recorded
+    STUDENT ||--o{ TEST : takes
+    USER ||--o{ TEST : conducts
+    STUDENT ||--o{ TEST_REQUEST : requests
+    TEACHER ||--o{ TEST_REQUEST : submits
+    STUDENT ||--o{ SUBSCRIPTION : pays
+    USER ||--o{ SALARY : receives
+    STUDENT ||--o{ CARD_CERTIFICATE : issued
+    USER ||--o{ NOTIFICATION_RECIPIENT : receives
+    PARENT ||--o{ NOTIFICATION_RECIPIENT : receives
+    STUDY_CIRCLE ||--o{ SCHEDULE : has
+    EDUCATIONAL_PROJECT ||--o{ STUDY_CIRCLE : assigned
+    STUDENT ||--o{ DOCUMENT : submits
+    FINANCIAL_TRANSACTION ||--o{ SUBSCRIPTION : related
+    USER ||--o{ LOG : performs
+    STUDENT ||--o{ STUDENT_PARENT : linked
+    PARENT ||--o{ STUDENT_PARENT : linked
+    USER ||--o{ ROLE_PERMISSION : assigned
+    PERMISSION ||--o{ ROLE_PERMISSION : assigned
+
+    USER {
+        int user_id PK %% Uniquely identifies each user in the system
+        string username %% Provides a unique login name for user authentication
+        string password %% Stores encrypted password for secure user login
+        string role %% Specifies user role (e.g., Manager, Teacher, Student) for access control
+        string email %% Stores user’s email for communication and password recovery
+        string phone_number %% Stores user’s contact number for direct communication
+        string address %% Stores user’s physical address for administrative records
+        string status %% Indicates if user account is active or inactive
+        string notification_preference %% Specifies preferred notification channel (e.g., email, SMS, in-app)
+    }
+
+    CENTER {
+        int center_id PK %% Uniquely identifies each educational center
+        string name %% Stores the name of the center for identification
+        string address %% Stores the physical address of the center for location tracking
+        string status %% Indicates if the center is active or inactive
+        int manager_id FK %% Links to the user (Center Manager) responsible for managing the center
+    }
+
+    TEACHER {
+        int teacher_id PK,FK %% Links to the user ID of the teacher for role-specific data
+        string qualifications %% Stores academic or professional qualifications of the teacher
+        int center_id FK %% Links to the center where the teacher is employed
+    }
+
+    STUDENT {
+        int student_id PK,FK %% Links to the user ID of the student for role-specific data
+        string name %% Stores the full name of the student for identification
+        string level %% Indicates the student’s academic or Quranic level for tracking progress
+        string exemption_status %% Specifies financial exemption status (e.g., exempted, non-exempted) for fee management
+        int center_id FK %% Links to the center where the student is enrolled
+        date birth_date %% Stores student’s date of birth for age-based grouping or eligibility
+        string gender %% Stores student’s gender for administrative purposes
+        string nationality %% Stores student’s nationality for international student tracking
+        string id_number %% Stores national ID or passport number for identification
+        string phone_number %% Stores student’s or guardian’s contact number for communication
+        string parent_name %% Stores name of the parent or guardian for emergency contact
+        string parent_phone %% Stores parent or guardian’s contact number for communication
+        string emergency_contact %% Stores additional contact for emergency situations
+        string medical_conditions %% Stores health issues or allergies for student safety
+        date registration_date %% Records the date the student enrolled for tracking
+        int preferred_circle_id FK %% Links to the preferred study circle for enrollment
+        string previous_education %% Stores prior Quranic or academic background for placement
+    }
+
+    STAFF {
+        int staff_id PK,FK %% Links to the user ID of the non-teaching staff for role-specific data
+        string role %% Specifies the staff’s role (e.g., admin, accountant) for task assignment
+        int center_id FK %% Links to the center where the staff is employed
+    }
+
+    PARENT {
+        int parent_id PK %% Uniquely identifies each parent or guardian
+        string name %% Stores the full name of the parent for identification
+        string email %% Stores parent’s email for communication and notifications
+        string phone_number %% Stores parent’s contact number for communication
+        string address %% Stores parent’s physical address for administrative records
+        string status %% Indicates if parent account is active or inactive
+    }
+
+    STUDENT_PARENT {
+        int student_id PK,FK %% Links to the student associated with the parent
+        int parent_id PK,FK %% Links to the parent associated with the student
+    }
+
+    STUDY_CIRCLE {
+        int circle_id PK %% Uniquely identifies each study circle
+        string name %% Stores the name of the study circle for identification
+        string type %% Specifies if the circle is individual or group-based
+        int teacher_id FK %% Links to the teacher leading the study circle
+        int center_id FK %% Links to the center hosting the study circle
+        int project_id FK %% Links to the educational project assigned to the circle
+        date start_date %% Records the start date of the study circle for scheduling
+        date end_date %% Records the end date of the study circle for scheduling
+    }
+
+    CIRCLE_STUDENT {
+        int circle_id PK,FK %% Links to the study circle for student enrollment
+        int student_id PK,FK %% Links to the student enrolled in the study circle
+    }
+
+    ATTENDANCE {
+        int attendance_id PK %% Uniquely identifies each attendance record
+        int circle_id FK %% Links to the study circle for attendance tracking
+        int student_id FK %% Links to the student whose attendance is recorded
+        date date %% Records the date of the attendance
+        string status %% Indicates if the student was present or absent
+    }
+
+    TEST {
+        int test_id PK %% Uniquely identifies each test
+        int student_id FK %% Links to the student taking the test
+        int tester_id FK %% Links to the user (Tester) conducting the test
+        date date %% Records the date the test was conducted
+        string result %% Stores the test outcome (e.g., pass/fail)
+        string level %% Indicates the Quranic or academic level assessed
+    }
+
+    TEST_REQUEST {
+        int request_id PK %% Uniquely identifies each test request
+        int student_id FK %% Links to the student requesting the test
+        int teacher_id FK %% Links to the teacher submitting the request
+        string status %% Indicates the request status (e.g., pending, approved, rejected)
+        date request_date %% Records the date the request was made
+    }
+
+    SUBSCRIPTION {
+        int subscription_id PK %% Uniquely identifies each subscription
+        int student_id FK %% Links to the student paying the subscription
+        string type %% Specifies the subscription type (e.g., monthly, annual)
+        float amount %% Stores the subscription fee amount
+        date start_date %% Records the start date of the subscription
+        date end_date %% Records the end date of the subscription
+    }
+
+    SALARY {
+        int salary_id PK %% Uniquely identifies each salary payment
+        int user_id FK %% Links to the user (Teacher/Staff) receiving the salary
+        float amount %% Stores the salary amount
+        date payment_date %% Records the date of the salary payment
+    }
+
+    CARD_CERTIFICATE {
+        int card_id PK %% Uniquely identifies each card or certificate
+        int student_id FK %% Links to the student receiving the card/certificate
+        string type %% Specifies if it is a card or certificate
+        date issue_date %% Records the date of issuance
+    }
+
+    NOTIFICATION {
+        int notification_id PK %% Uniquely identifies each notification
+        string type %% Specifies the notification channel (e.g., email, SMS, in-app)
+        string content %% Stores the content of the notification
+        date send_date %% Records the scheduled or actual send date
+        string status %% Indicates the notification status (e.g., pending, sent, delivered)
+    }
+
+    NOTIFICATION_RECIPIENT {
+        int notification_id PK,FK %% Links to the notification being sent
+        int user_id FK %% Links to the user receiving the notification (null if parent)
+        int parent_id FK %% Links to the parent receiving the notification (null if user)
+        string delivery_status %% Indicates if the notification was delivered or read
+    }
+
+    PERMISSION {
+        int permission_id PK %% Uniquely identifies each permission
+        string name %% Stores the permission name (e.g., can_edit_student)
+        string description %% Describes the permission’s purpose
+    }
+
+    ROLE_PERMISSION {
+        string role PK %% Links to the user role (e.g., Manager, Teacher)
+        int permission_id PK,FK %% Links to the permission assigned to the role
+    }
+
+    SCHEDULE {
+        int schedule_id PK %% Uniquely identifies each schedule entry
+        int circle_id FK %% Links to the study circle being scheduled
+        date date %% Records the date of the scheduled session
+        time start_time %% Records the start time of the session
+        time end_time %% Records the end time of the session
+        string location %% Stores the location or room for the session
+    }
+
+    EDUCATIONAL_PROJECT {
+        int project_id PK %% Uniquely identifies each educational project
+        string name %% Stores the name of the project or curriculum
+        string description %% Provides a detailed description of the project
+        string requirements %% Lists prerequisites or requirements for the project
+        string progress_path %% Defines the progression path for students
+        string status %% Indicates if the project is active or inactive
+    }
+
+    DOCUMENT {
+        int document_id PK %% Uniquely identifies each document
+        int student_id FK %% Links to the student submitting the document
+        string type %% Specifies the type of document (e.g., ID, certificate)
+        string file_path %% Stores the path to the stored document file
+        date upload_date %% Records the date the document was uploaded
+        string status %% Indicates the verification status (e.g., pending, approved, rejected)
+    }
+
+    FINANCIAL_TRANSACTION {
+        int transaction_id PK %% Uniquely identifies each financial transaction
+        string type %% Specifies if the transaction is revenue or expense
+        float amount %% Stores the transaction amount
+        date date %% Records the date of the transaction
+        string description %% Provides a brief description of the transaction
+        int subscription_id FK %% Links to the related subscription (if applicable)
+    }
+
+    LOG {
+        int log_id PK %% Uniquely identifies each log entry
+        int user_id FK %% Links to the user performing the action
+        string action %% Describes the action performed (e.g., create_student, update_test)
+        datetime timestamp %% Records the date and time of the action
+        string entity_type %% Specifies the entity affected (e.g., STUDENT, TEST)
+        int entity_id %% Identifies the specific record affected (e.g., student_id)
+        string details %% Stores additional context (e.g., JSON of changed fields)
+    }

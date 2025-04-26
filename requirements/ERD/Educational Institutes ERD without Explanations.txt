@@ -1,0 +1,230 @@
+erDiagram
+    USER ||--o{ CENTER : manages
+    CENTER ||--o{ TEACHER : employs
+    CENTER ||--o{ STUDENT : enrolls
+    CENTER ||--o{ STAFF : employs
+    TEACHER ||--o{ STUDY_CIRCLE : leads
+    STUDY_CIRCLE ||--o{ CIRCLE_STUDENT : includes
+    STUDENT ||--o{ CIRCLE_STUDENT : joins
+    STUDY_CIRCLE ||--o{ ATTENDANCE : tracks
+    STUDENT ||--o{ ATTENDANCE : recorded
+    STUDENT ||--o{ TEST : takes
+    USER ||--o{ TEST : conducts
+    STUDENT ||--o{ TEST_REQUEST : requests
+    TEACHER ||--o{ TEST_REQUEST : submits
+    STUDENT ||--o{ SUBSCRIPTION : pays
+    USER ||--o{ SALARY : receives
+    STUDENT ||--o{ CARD_CERTIFICATE : issued
+    USER ||--o{ NOTIFICATION_RECIPIENT : receives
+    PARENT ||--o{ NOTIFICATION_RECIPIENT : receives
+    STUDY_CIRCLE ||--o{ SCHEDULE : has
+    EDUCATIONAL_PROJECT ||--o{ STUDY_CIRCLE : assigned
+    STUDENT ||--o{ DOCUMENT : submits
+    FINANCIAL_TRANSACTION ||--o{ SUBSCRIPTION : related
+    USER ||--o{ LOG : performs
+    STUDENT ||--o{ STUDENT_PARENT : linked
+    PARENT ||--o{ STUDENT_PARENT : linked
+    USER ||--o{ ROLE_PERMISSION : assigned
+    PERMISSION ||--o{ ROLE_PERMISSION : assigned
+
+    USER {
+        int user_id PK
+        string username
+        string password
+        string role
+        string email
+        string phone_number
+        string address
+        string status
+        string notification_preference
+    }
+
+    CENTER {
+        int center_id PK
+        string name
+        string address
+        string status
+        int manager_id FK
+    }
+
+    TEACHER {
+        int teacher_id PK,FK
+        string qualifications
+        int center_id FK
+    }
+
+    STUDENT {
+        int student_id PK,FK
+        string name
+        string level
+        string exemption_status
+        int center_id FK
+        date birth_date
+        string gender
+        string nationality
+        string id_number
+        string phone_number
+        string parent_name
+        string parent_phone
+        string emergency_contact
+        string medical_conditions
+        date registration_date
+        int preferred_circle_id FK
+        string previous_education
+    }
+
+    STAFF {
+        int staff_id PK,FK
+        string role
+        int center_id FK
+    }
+
+    PARENT {
+        int parent_id PK
+        string name
+        string email
+        string phone_number
+        string address
+        string status
+    }
+
+    STUDENT_PARENT {
+        int student_id PK,FK
+        int parent_id PK,FK
+    }
+
+    STUDY_CIRCLE {
+        int circle_id PK
+        string name
+        string type
+        int teacher_id FK
+        int center_id FK
+        int project_id FK
+        date start_date
+        date end_date
+    }
+
+    CIRCLE_STUDENT {
+        int circle_id PK,FK
+        int student_id PK,FK
+    }
+
+    ATTENDANCE {
+        int attendance_id PK
+        int circle_id FK
+        int student_id FK
+        date date
+        string status
+    }
+
+    TEST {
+        int test_id PK
+        int student_id FK
+        int tester_id FK
+        date date
+        string result
+        string level
+    }
+
+    TEST_REQUEST {
+        int request_id PK
+        int student_id FK
+        int teacher_id FK
+        string status
+        date request_date
+    }
+
+    SUBSCRIPTION {
+        int subscription_id PK
+        int student_id FK
+        string type
+        float amount
+        date start_date
+        date end_date
+    }
+
+    SALARY {
+        int salary_id PK
+        int user_id FK
+        float amount
+        date payment_date
+    }
+
+    CARD_CERTIFICATE {
+        int card_id PK
+        int student_id FK
+        string type
+        date issue_date
+    }
+
+    NOTIFICATION {
+        int notification_id PK
+        string type
+        string content
+        date send_date
+        string status
+    }
+
+    NOTIFICATION_RECIPIENT {
+        int notification_id PK,FK
+        int user_id FK
+        int parent_id FK
+        string delivery_status
+    }
+
+    PERMISSION {
+        int permission_id PK
+        string name
+        string description
+    }
+
+    ROLE_PERMISSION {
+        string role PK
+        int permission_id PK,FK
+    }
+
+    SCHEDULE {
+        int schedule_id PK
+        int circle_id FK
+        date date
+        time start_time
+        time end_time
+        string location
+    }
+
+    EDUCATIONAL_PROJECT {
+        int project_id PK
+        string name
+        string description
+        string requirements
+        string progress_path
+        string status
+    }
+
+    DOCUMENT {
+        int document_id PK
+        int student_id FK
+        string type
+        string file_path
+        date upload_date
+        string status
+    }
+
+    FINANCIAL_TRANSACTION {
+        int transaction_id PK
+        string type
+        float amount
+        date date
+        string description
+        int subscription_id FK
+    }
+
+    LOG {
+        int log_id PK
+        int user_id FK
+        string action
+        datetime timestamp
+        string entity_type
+        int entity_id
+        string details
+    }

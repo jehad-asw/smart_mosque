@@ -1,0 +1,21 @@
+# AI Rules for Educational and Quranic Institutes Management System
+
+## Frontend (FE) Rules
+- Use functional components in React for all UI elements.
+- Prefer Material-UI for styling; do not use custom CSS or other styling libraries.
+- Use Axios for all API requests to communicate with the backend.
+- Name variables and functions in camelCase (e.g., `fetchUserData`, `userProfile`).
+- Avoid inline styles; apply Material-UI classes or theme-based styling.
+- Ensure all components are exported with `export default` or named exports as needed.
+- Use ES6+ syntax (e.g., arrow functions, destructuring, template literals).
+- Use React hooks (e.g., `useState`, `useEffect`) for state and side effects.
+
+## Backend (BE) Rules
+- Follow RESTful conventions for API routes (e.g., `/api/users/`, `/api/courses/`).
+- Use Django ORM for all database queries; do not write raw SQL.
+- Name variables and functions in snake_case (e.g., `get_user_profile`, `course_list`).
+- Ensure all views are class-based and built with Django REST Framework.
+- Use Django’s built-in authentication (e.g., token-based or session-based) for securing API endpoints.
+- Follow PEP 8 for code style (e.g., 4-space indentation, max 79 characters per line).
+- Store sensitive data (e.g., database credentials, API keys) in environment variables.
+- Implement Python logging for key operations (e.g., user login, critical errors).
