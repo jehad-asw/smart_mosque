@@ -1,13 +1,28 @@
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Column, Integer, ForeignKey, String, Text
 from sqlalchemy.orm import relationship
-from app.config.database import Base
+from app.models.user import User
+from datetime import datetime
 
 
-class Teacher(Base):
+class Teacher(User):
+    """Teacher model that inherits from User"""
     __tablename__ = "teachers"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), unique=True)
-    subject = Column(String)
-
-    user = relationship("User", backref="teacher")
+    
+    # Link to parent User table
+    id = Column(Integer, ForeignKey("users.id"), primary_key=True)
+    
+    # Teacher-specific fields
+    qualifications = Column(Text, nullable=True)
+    center_id = Column(Integer, ForeignKey("centers.id"), nullable=True)
+    specialization = Column(String, nullable=True)
+    years_of_experience = Column(Integer, nullable=True)
+    certifications = Column(Text, nullable=True)
+    availability = Column(String, nullable=True)  # Could be JSON string with schedule information
+    
+    # Relationships
+    center = relationship("Center", back_populates="teachers")
+    study_circles = relationship("StudyCircle", back_populates="teacher")
+    
+    __mapper_args__ = {
+        'polymorphic_identity': 'teacher',
+    }
