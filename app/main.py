@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.middleware.auth import AuthMiddleware
+from app.middleware.logging import LoggingMiddleware
+
 from app.api import auth, teachers, students, parents
 
 app = FastAPI(
@@ -8,6 +11,9 @@ app = FastAPI(
     description="API for Smart Mosque Educational Management System",
     version="1.0.0"
 )
+
+app.add_middleware(AuthMiddleware)
+app.add_middleware(LoggingMiddleware)
 
 # Configure CORS
 app.add_middleware(

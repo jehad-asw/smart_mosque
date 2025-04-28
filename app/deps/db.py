@@ -4,7 +4,7 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from typing import Optional
 from app.config.database import SessionLocal
-from app.models.user import User
+from app.models.user import Role, User
 from app.config.security import SECRET_KEY, ALGORITHM
 
 # Update the tokenUrl to match our new auth router prefix
@@ -48,3 +48,14 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise credentials_exception
         
     return user
+
+
+def require_role(required_role: Role):
+    def role_checker(current_user=Depends(get_current_user)):
+        if current_user.role != required_role:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"User must have role {required_role}"
+            )
+        return current_user
+    return role_checker
