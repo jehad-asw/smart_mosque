@@ -41,8 +41,6 @@ class Center(CenterBase):
     """Schema for center information returned to clients"""
     id: int
     manager_id: int
-    created_at: str
-    updated_at: str
     
     # Include relationships
     teachers: Optional[List[dict]] = None
