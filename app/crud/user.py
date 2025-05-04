@@ -11,105 +11,86 @@ from app.config.security import hash_password
 T = TypeVar('T')
 
 
-def create_user(db: Session, user: UserCreate) -> User:
-    """Create a base user with common fields"""
-    db_user = User(
-        username=user.username,
-        email=user.email,
-        hashed_password=hash_password(user.password),
-        role=user.role,
-        firstname=user.firstname,
-        lastname=user.lastname,
-        phone_number=user.phone_number,
-        address=user.address,
-        notification_preference=user.notification_preference,
-        status=user.status,
-        type='user'  # Set the polymorphic identity
+def create_user_with_role(db: Session, user_data: UserCreate, role: Role, extra_data: dict = None):
+    extra_data = extra_data or {}
+
+    # Determine the correct model class based on the role
+    model_class = {
+        Role.student: Student,
+        Role.teacher: Teacher,
+        Role.parent: Parent
+    }.get(role, User)
+
+    # Create an instance of the appropriate model
+    user = model_class(
+        username=user_data.username,
+        email=user_data.email,
+        hashed_password=hash_password(user_data.password),
+        role=role,
+        firstname=user_data.firstname,
+        lastname=user_data.lastname,
+        phone_number=user_data.phone_number,
+        address=user_data.address,
+        notification_preference=user_data.notification_preference,
+        status=user_data.status,
+        **extra_data
     )
-    db.add(db_user)
+
+    db.add(user)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(user)
+    return user
+
+
+def create_user(db: Session, user_data: UserCreate) -> User:
+    """Create a base user with common fields"""
+    db_user = {
+        "type": "user"  # Set the polymorphic identity
+    }
+
+    return create_user_with_role(db, user_data, Role.admin, db_user)
 
 
 def create_teacher(db: Session, user_data: UserCreate, teacher_data: dict) -> Teacher:
     """Create a teacher (inherits from User)"""
-    db_teacher = Teacher(
-        # User fields
-        username=user_data.username,
-        email=user_data.email,
-        hashed_password=hash_password(user_data.password),
-        role=Role.teacher,
-        firstname=user_data.firstname,
-        lastname=user_data.lastname,
-        phone_number=user_data.phone_number,
-        address=user_data.address,
-        notification_preference=user_data.notification_preference,
-        status=user_data.status,
+    db_teacher = {
         # Teacher-specific fields
-        center_id=teacher_data.get('center_id'),
-        qualifications=teacher_data.get('qualifications'),
-        specialization=teacher_data.get('specialization'),
-        years_of_experience=teacher_data.get('years_of_experience'),
-        certifications=teacher_data.get('certifications'),
-        availability=teacher_data.get('availability')
-    )
-    db.add(db_teacher)
-    db.commit()
-    db.refresh(db_teacher)
-    return db_teacher
+        "center_id": teacher_data.get('center_id'),
+        "qualifications": teacher_data.get('qualifications'),
+        "specialization": teacher_data.get('specialization'),
+        "years_of_experience": teacher_data.get('years_of_experience'),
+        "certifications": teacher_data.get('certifications'),
+        "availability": teacher_data.get('availability')
+    }
+
+    return create_user_with_role(db, user_data, Role.teacher, db_teacher)
 
 
 def create_student(db: Session, user_data: UserCreate, student_data: dict) -> Student:
     """Create a student (inherits from User)"""
-    db_student = Student(
-        # User fields
-        username=user_data.username,
-        email=user_data.email,
-        hashed_password=hash_password(user_data.password),
-        role=Role.student,
-        firstname=user_data.firstname,
-        lastname=user_data.lastname,
-        phone_number=user_data.phone_number,
-        address=user_data.address,
-        notification_preference=user_data.notification_preference,
-        status=user_data.status,
+    db_student = {
         # Student-specific fields
-        level=student_data.get('level'),
-        exemption_status=student_data.get('exemption_status'),
-        center_id=student_data.get('center_id'),
-        birth_date=student_data.get('birth_date'),
-        gender=student_data.get('gender'),
-        nationality=student_data.get('nationality'),
-        id_number=student_data.get('id_number'),
-        parent_name=student_data.get('parent_name'),
-        parent_phone=student_data.get('parent_phone'),
-        emergency_contact=student_data.get('emergency_contact'),
-        medical_conditions=student_data.get('medical_conditions'),
-        registration_date=student_data.get('registration_date'),
-        preferred_circle_id=student_data.get('preferred_circle_id'),
-        previous_education=student_data.get('previous_education')
-    )
-    db.add(db_student)
-    db.commit()
-    db.refresh(db_student)
-    return db_student
+        "level":student_data.get('level'),
+        "exemption_status":student_data.get('exemption_status'),
+        "center_id":student_data.get('center_id'),
+        "birth_date":student_data.get('birth_date'),
+        "gender":student_data.get('gender'),
+        "nationality":student_data.get('nationality'),
+        "id_number":student_data.get('id_number'),
+        "parent_name":student_data.get('parent_name'),
+        "parent_phone":student_data.get('parent_phone'),
+        "emergency_contact":student_data.get('emergency_contact'),
+        "medical_conditions":student_data.get('medical_conditions'),
+        "registration_date":student_data.get('registration_date'),
+        "preferred_circle_id":student_data.get('preferred_circle_id'),
+        "previous_education":student_data.get('previous_education')
+    }
+    return create_user_with_role(db, user_data, Role.student, db_student)
 
 
 def create_parent(db: Session, user_data: UserCreate, parent_data: dict) -> Parent:
     """Create a parent (inherits from User)"""
     db_parent = Parent(
-        # User fields
-        username=user_data.username,
-        email=user_data.email,
-        hashed_password=hash_password(user_data.password),
-        role=Role.parent,
-        firstname=user_data.firstname,
-        lastname=user_data.lastname,
-        phone_number=user_data.phone_number,
-        address=user_data.address,
-        notification_preference=user_data.notification_preference,
-        status=user_data.status,
         # Parent-specific fields
         occupation=parent_data.get('occupation'),
         relationship_to_student=parent_data.get('relationship_to_student'),
@@ -117,10 +98,8 @@ def create_parent(db: Session, user_data: UserCreate, parent_data: dict) -> Pare
         preferred_contact_time=parent_data.get('preferred_contact_time'),
         notes=parent_data.get('notes')
     )
-    db.add(db_parent)
-    db.commit()
-    db.refresh(db_parent)
-    return db_parent
+
+    return create_user_with_role(db, user_data, Role.parent, db_parent)
 
 
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
@@ -153,11 +132,11 @@ def update_user(db: Session, user_id: int, user_data: UserUpdate) -> Optional[Us
     db_user = get_user_by_id(db, user_id)
     if not db_user:
         return None
-    
+
     # Update user attributes that are provided
     for key, value in user_data.dict(exclude_unset=True).items():
         setattr(db_user, key, value)
-    
+
     db.commit()
     db.refresh(db_user)
     return db_user
@@ -168,7 +147,7 @@ def delete_user(db: Session, user_id: int) -> bool:
     db_user = get_user_by_id(db, user_id)
     if not db_user:
         return False
-    
+
     db.delete(db_user)
     db.commit()
     return True

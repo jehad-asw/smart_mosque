@@ -1,15 +1,13 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+from jose import JWTError
 from sqlalchemy.orm import Session
 from typing import Optional
 from app.config.database import SessionLocal
-from app.models.user import User
-from app.config.security import SECRET_KEY, ALGORITHM
+from app.models.user import Role, User
+from app.config.security import verify_token
 
-# Update the tokenUrl to match our new auth router prefix
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
-
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 def get_db():
     """Dependency for database session"""
@@ -19,32 +17,56 @@ def get_db():
     finally:
         db.close()
 
-
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
-    """Dependency to get the current authenticated user"""
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+) -> User:
+    """Dependency to get the current authenticated user with enhanced error handling"""
     try:
-        # Decode the JWT token
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        
-        # Extract user information from token
+        # Use the improved token verification
+        payload = verify_token(token)
         email: str = payload.get("sub")
-        user_id: Optional[int] = payload.get("user_id")
-        role: Optional[str] = payload.get("role")
-        
         if email is None:
-            raise credentials_exception
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
             
-    except JWTError:
-        raise credentials_exception
-
-    # Get the user from the database
-    user = db.query(User).filter(User.email == email).first()
-    if user is None:
-        raise credentials_exception
+        # Get the user from the database
+        user = db.query(User).filter(User.email == email).first()
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User not found",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
+            
+        return user
         
-    return user
+    except JWTError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(e),
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+def require_role(required_role: Role):
+    """Enhanced role requirement checker with better error messages"""
+    def role_checker(current_user: User = Depends(get_current_user)):
+        if current_user.role != required_role:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Access denied. Required role: {required_role.value}"
+            )
+        return current_user
+    return role_checker
+
+def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
+    """Additional check for user status"""
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account is inactive"
+        )
+    return current_user

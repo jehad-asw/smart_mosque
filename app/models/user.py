@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, Enum, Boolean, ForeignKey
-from sqlalchemy.ext.declarative import declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Enum
 from app.config.database import Base
+from sqlalchemy.orm import relationship
 import enum
 from datetime import datetime
 
@@ -31,7 +30,7 @@ class UserStatus(str, enum.Enum):
 class User(Base):
     """Base User model that all user types inherit from"""
     __tablename__ = "users"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
@@ -45,10 +44,10 @@ class User(Base):
     notification_preference = Column(Enum(NotificationPreference), default=NotificationPreference.email)
     created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
     updated_at = Column(String, default=lambda: datetime.utcnow().isoformat(), onupdate=lambda: datetime.utcnow().isoformat())
-    
-    # This will be used to determine the type of user in polymorphic queries
+
+  # This will be used to determine the type of user in polymorphic queries
     type = Column(String(50))
-    
+
     __mapper_args__ = {
         'polymorphic_on': type,
         'polymorphic_identity': 'user'

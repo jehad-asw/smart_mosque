@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, String, Date, Enum, Text
 from sqlalchemy.orm import relationship
 from app.models.user import User
 import enum
-from datetime import datetime
+from datetime import date, datetime
 
 
 class ExemptionStatus(str, enum.Enum):
@@ -19,10 +19,10 @@ class Gender(str, enum.Enum):
 class Student(User):
     """Student model that inherits from User"""
     __tablename__ = "students"
-    
+
     # Link to parent User table
     id = Column(Integer, ForeignKey("users.id"), primary_key=True)
-    
+
     # Student-specific fields
     level = Column(String)
     exemption_status = Column(Enum(ExemptionStatus), default=ExemptionStatus.non_exempted)
@@ -38,15 +38,25 @@ class Student(User):
     registration_date = Column(Date, default=datetime.utcnow)
     preferred_circle_id = Column(Integer, ForeignKey("study_circles.id"), nullable=True)
     previous_education = Column(String, nullable=True)
-    
+
     # Relationships
     center = relationship("Center", back_populates="students")
     preferred_circle = relationship("StudyCircle", foreign_keys=[preferred_circle_id])
     student_circles = relationship("CircleStudent", back_populates="student")
     attendances = relationship("Attendance", back_populates="student")
-    tests = relationship("Test", back_populates="student")
     student_parents = relationship("StudentParent", back_populates="student")
-    
+
     __mapper_args__ = {
         'polymorphic_identity': 'student',
     }
+
+    @property
+    def age(self) -> int:
+        today = date.today()
+        return today.year - self.user.date_of_birth.year - (
+                (today.month, today.day) < (self.user.date_of_birth.month, self.user.date_of_birth.day)
+        )
+
+    @property
+    def full_name(self) -> str:
+        return f"{self.user.firstname} {self.user.lastname}"

@@ -22,5 +22,4 @@ from app.schemas.circle_student import CircleStudentBase, CircleStudentCreate, C
 
 # Attendance and Test schemas
 from app.schemas.attendance import AttendanceBase, AttendanceCreate, AttendanceUpdate, Attendance, AttendanceStatus
-from app.schemas.test import TestBase, TestCreate, TestUpdate, Test, TestStatus, TestType
 from app.schemas.schedule import ScheduleBase, ScheduleCreate, ScheduleUpdate, Schedule, DayOfWeek
