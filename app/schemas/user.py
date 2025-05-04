@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 from enum import Enum
 from typing import Optional, List, Dict, Any, Union
 from datetime import datetime, date
@@ -45,7 +45,7 @@ class UserBase(BaseModel):
     notification_preference: NotificationPreference = NotificationPreference.email
     status: UserStatus = UserStatus.active
 
-    @validator('username')
+    @field_validator('username')
     def username_must_be_valid(cls, v):
         if len(v) < 3:
             raise ValueError('Username must be at least 3 characters')
@@ -56,7 +56,7 @@ class UserCreate(UserBase):
     """Schema for creating a new user"""
     password: str
     
-    @validator('password')
+    @field_validator('password')
     def password_must_be_strong(cls, v):
         if len(v) < 8:
             raise ValueError('Password must be at least 8 characters')
@@ -75,7 +75,9 @@ class UserUpdate(BaseModel):
     status: Optional[UserStatus] = None
     password: Optional[str] = None
 
-    @validator('password')
+    model_config = ConfigDict(from_attributes=True)
+
+    @field_validator('password')
     def password_must_be_strong(cls, v):
         if v is not None and len(v) < 8:
             raise ValueError('Password must be at least 8 characters')
@@ -89,8 +91,7 @@ class UserInDBBase(UserBase):
     updated_at: str
     type: UserType
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class User(UserInDBBase):
@@ -108,7 +109,7 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
     
-    @validator('password')
+    @field_validator('password')
     def password_must_not_be_empty(cls, v):
         if not v or len(v) < 1:
             raise ValueError('Password cannot be empty')

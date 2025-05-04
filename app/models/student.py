@@ -44,7 +44,6 @@ class Student(User):
     preferred_circle = relationship("StudyCircle", foreign_keys=[preferred_circle_id])
     student_circles = relationship("CircleStudent", back_populates="student")
     attendances = relationship("Attendance", back_populates="student")
-    tests = relationship("Test", back_populates="student")
     student_parents = relationship("StudentParent", back_populates="student")
 
     __mapper_args__ = {

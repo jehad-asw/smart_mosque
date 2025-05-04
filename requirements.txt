@@ -5,4 +5,9 @@ alembic
 psycopg2-binary
 python-dotenv
 passlib[bcrypt]
+pydantic[email]
 python-jose
+pytest
+httpx
+pytest-asyncio
+async-timeout

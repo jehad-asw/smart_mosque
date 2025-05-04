@@ -51,6 +51,7 @@ erDiagram
         int teacher_id PK,FK
         string qualifications
         int center_id FK
+        int user_id FK
     }
 
     STUDENT {

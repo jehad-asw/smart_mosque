@@ -23,9 +23,7 @@ class Center(Base):
     email = Column(String, nullable=True)
     capacity = Column(Integer, nullable=True)
     description = Column(Text, nullable=True)
-    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
-    updated_at = Column(String, default=lambda: datetime.utcnow().isoformat(), onupdate=lambda: datetime.utcnow().isoformat())
-
+ 
     # Relationships
     manager = relationship("User", foreign_keys=[manager_id])
     teachers = relationship("Teacher", back_populates="center", foreign_keys="[Teacher.center_id]")

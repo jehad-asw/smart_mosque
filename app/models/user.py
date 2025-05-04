@@ -45,7 +45,7 @@ class User(Base):
     created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
     updated_at = Column(String, default=lambda: datetime.utcnow().isoformat(), onupdate=lambda: datetime.utcnow().isoformat())
 
-    # This will be used to determine the type of user in polymorphic queries
+  # This will be used to determine the type of user in polymorphic queries
     type = Column(String(50))
 
     __mapper_args__ = {

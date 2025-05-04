@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Security
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer
 
 from app.middleware.auth import AuthMiddleware
 from app.middleware.logging import LoggingMiddleware
@@ -9,9 +10,24 @@ from app.api import auth, teachers, students, parents
 app = FastAPI(
     title="Smart Mosque API",
     description="API for Smart Mosque Educational Management System",
-    version="1.0.0"
+    version="1.0.0",
+    openapi_tags=[
+        {"name": "Authentication", "description": "Operations with authentication"},
+        {"name": "Teachers", "description": "Operations with teachers"},
+        {"name": "Students", "description": "Operations with students"},
+        {"name": "Parents", "description": "Operations with parents"}
+    ]
 )
 
+# Define OAuth2 scheme for Swagger UI
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+
+# Configure security for all endpoints
+app.swagger_ui_init_oauth = {
+    "usePkceWithAuthorizationCodeGrant": True
+}
+
+# Add middleware
 app.add_middleware(AuthMiddleware)
 app.add_middleware(LoggingMiddleware)
 
