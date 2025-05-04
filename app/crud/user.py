@@ -14,7 +14,15 @@ T = TypeVar('T')
 def create_user_with_role(db: Session, user_data: UserCreate, role: Role, extra_data: dict = None):
     extra_data = extra_data or {}
 
-    user = User(
+    # Determine the correct model class based on the role
+    model_class = {
+        Role.student: Student,
+        Role.teacher: Teacher,
+        Role.parent: Parent
+    }.get(role, User)
+
+    # Create an instance of the appropriate model
+    user = model_class(
         username=user_data.username,
         email=user_data.email,
         hashed_password=hash_password(user_data.password),
@@ -27,6 +35,7 @@ def create_user_with_role(db: Session, user_data: UserCreate, role: Role, extra_
         status=user_data.status,
         **extra_data
     )
+
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -59,23 +68,23 @@ def create_teacher(db: Session, user_data: UserCreate, teacher_data: dict) -> Te
 
 def create_student(db: Session, user_data: UserCreate, student_data: dict) -> Student:
     """Create a student (inherits from User)"""
-    db_student = Student(
+    db_student = {
         # Student-specific fields
-        level=student_data.get('level'),
-        exemption_status=student_data.get('exemption_status'),
-        center_id=student_data.get('center_id'),
-        birth_date=student_data.get('birth_date'),
-        gender=student_data.get('gender'),
-        nationality=student_data.get('nationality'),
-        id_number=student_data.get('id_number'),
-        parent_name=student_data.get('parent_name'),
-        parent_phone=student_data.get('parent_phone'),
-        emergency_contact=student_data.get('emergency_contact'),
-        medical_conditions=student_data.get('medical_conditions'),
-        registration_date=student_data.get('registration_date'),
-        preferred_circle_id=student_data.get('preferred_circle_id'),
-        previous_education=student_data.get('previous_education')
-    )
+        "level":student_data.get('level'),
+        "exemption_status":student_data.get('exemption_status'),
+        "center_id":student_data.get('center_id'),
+        "birth_date":student_data.get('birth_date'),
+        "gender":student_data.get('gender'),
+        "nationality":student_data.get('nationality'),
+        "id_number":student_data.get('id_number'),
+        "parent_name":student_data.get('parent_name'),
+        "parent_phone":student_data.get('parent_phone'),
+        "emergency_contact":student_data.get('emergency_contact'),
+        "medical_conditions":student_data.get('medical_conditions'),
+        "registration_date":student_data.get('registration_date'),
+        "preferred_circle_id":student_data.get('preferred_circle_id'),
+        "previous_education":student_data.get('previous_education')
+    }
     return create_user_with_role(db, user_data, Role.student, db_student)
 
 

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, String, Date, Enum, Text
 from sqlalchemy.orm import relationship
 from app.models.user import User
 import enum
-from datetime import datetime
+from datetime import date, datetime
 
 
 class ExemptionStatus(str, enum.Enum):
