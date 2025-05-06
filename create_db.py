@@ -1,7 +1,18 @@
-from app.config.database import engine, Base
-from app.models import user, teacher, student  # import all models here
+import os
+import subprocess
 
-# Create all tables in the database
-Base.metadata.create_all(bind=engine)
+def run_alembic():
+    print("Running Alembic revision and upgrade...")
 
-print("Database tables created successfully.")
+    # Generate revision
+    subprocess.run([
+        "alembic", "revision", "--autogenerate", "-m", "Auto migration"
+    ], check=True)
+
+    # Apply migrations
+    subprocess.run([
+        "alembic", "upgrade", "head"
+    ], check=True)
+
+if __name__ == "__main__":
+    run_alembic()
