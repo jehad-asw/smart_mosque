@@ -14,9 +14,7 @@ class CircleStudent(Base):
     join_date = Column(Date, default=datetime.utcnow)
     status = Column(String, default="active")  # active, inactive, graduated
     notes = Column(String, nullable=True)
-    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
-    updated_at = Column(String, default=lambda: datetime.utcnow().isoformat(), onupdate=lambda: datetime.utcnow().isoformat())
-    
+ 
     # Relationships
     study_circle = relationship("StudyCircle", back_populates="students")
     student = relationship("Student", back_populates="student_circles")

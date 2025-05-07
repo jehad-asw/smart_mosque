@@ -27,7 +27,20 @@ class StudentCreate(UserCreate, StudentBase):
 
 class StudentUpdate(UserUpdate, StudentBase):
     """Schema for updating a student"""
-    pass
+    level: Optional[str] = None
+    exemption_status: Optional[ExemptionStatus] = None
+    center_id: Optional[int] = None
+    birth_date: Optional[date] = None
+    gender: Optional[Gender] = None
+    nationality: Optional[str] = None
+    id_number: Optional[str] = None
+    parent_name: Optional[str] = None
+    parent_phone: Optional[str] = None
+    emergency_contact: Optional[str] = None
+    medical_conditions: Optional[str] = None
+    registration_date: Optional[date] = None
+    preferred_circle_id: Optional[int] = None
+    previous_education: Optional[str] = None
 
 class Student(User, StudentBase):
     """Schema for student response"""

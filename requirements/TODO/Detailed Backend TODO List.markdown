@@ -11,10 +11,10 @@
 
 ## 2. Database Models
 - [ ] Define models in `models.py` for all entities:
-  - [ ] `User` (with `role`, `phone_number`, etc.)
-  - [ ] `Center`
-  - [ ] `Teacher`
-  - [ ] `Student`
+  - [x] `User` (with `role`, `phone_number`, etc.)
+  - [x] `Center`
+  - [x] `Teacher`
+  - [x] `Student`
   - [ ] `Staff`
   - [ ] `Parent`
   - [ ] `StudyCircle`
@@ -39,10 +39,10 @@
 ## 3. API Endpoints (CRUD for Each Entity)
 - [ ] Create serializers for all models.
 - [ ] Implement viewsets for each entity:
-  - [ ] `/api/users/` (CRUD)
-  - [ ] `/api/centers/` (CRUD)
-  - [ ] `/api/teachers/` (CRUD)
-  - [ ] `/api/students/` (CRUD)
+  - [x] `/api/users/` (CRUD)
+  - [x] `/api/centers/` (CRUD)
+  - [x] `/api/teachers/` (CRUD)
+  - [x] `/api/students/` (CRUD)
   - [ ] `/api/staff/` (CRUD)
   - [ ] `/api/parents/` (CRUD)
   - [ ] `/api/study-circles/` (CRUD)
@@ -66,8 +66,8 @@
 
 ## 4. Custom Endpoints
 - [ ] **Authentication**:
-  - [ ] `/api/token/` for obtaining auth token.
-  - [ ] `/api/register/` for user registration.
+  - [x] `/api/token/` for obtaining auth token.
+  - [x] `/api/register/` for user registration.
 - [ ] **Notifications**:
   - [ ] `/api/send-notification/` to trigger notification sending.
 - [ ] **Dashboard Metrics**:

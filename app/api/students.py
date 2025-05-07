@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.student import Student
+from app.schemas.student import Student, StudentUpdate
 from app.crud import student as student_crud
 from app.models.user import Role
 from app.deps.db import get_db, get_current_user
@@ -66,3 +66,17 @@ async def get_students(
     if not students:
         raise HTTPException(status_code=404, detail="No students found")
     return students
+
+@router.put("/students/{student_id}", response_model=Student)
+def update_existing_student(student_id: int, student: StudentUpdate, db: Session = Depends(get_db)):
+    db_student = student_crud.update_student(db, student_id, student)
+    if not db_student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return db_student
+
+@router.delete("/students/{student_id}", response_model=Student)
+def delete_existing_student(student_id: int, db: Session = Depends(get_db)):
+    db_student = student_crud.delete_student(db, student_id)
+    if not db_student:
+        raise HTTPException(status_code=404, detail="student not found")
+    return db_student

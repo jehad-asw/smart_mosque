@@ -1,21 +1,21 @@
 # Backend TODO List (Django)
 
 ## Setup Environment
-- [ ] Install Python 3.10+ and verify with `python --version`.
-- [ ] Install PostgreSQL and create a database named `edu_system`.
-- [ ] Create a backend directory (`backend`) in the project root.
-- [ ] Set up a virtual environment: `python -m venv venv` and activate it.
+- [x] Install Python 3.10+ and verify with `python --version`.
+- [x] Install PostgreSQL and create a database named `edu_system`.
+- [x] Create a backend directory (`backend`) in the project root.
+- [x] Set up a virtual environment: `python -m venv venv` and activate it.
 - [ ] Install dependencies: `pip install django psycopg2-binary django-rest-framework`.
 - [ ] Initialize a Django project: `django-admin startproject project .`.
 - [ ] Create a Django app: `python manage.py startapp app`.
-- [ ] Configure PostgreSQL in `project/settings.py` with database credentials.
+- [x] Configure PostgreSQL in `project/settings.py` with database credentials.
 - [ ] Add `rest_framework` and `app` to `INSTALLED_APPS` in `project/settings.py`.
 
 ## Database and Models
 - [ ] Define models in `app/models.py` for core ERD entities:
-  - [ ] `User` (extend `AbstractUser` with `role`, `phone_number`, etc.).
-  - [ ] `Student` (with `level`, `birth_date`, etc.).
-  - [ ] `Center` (with `name`, `address`, etc.).
+  - [x] `User` (extend `AbstractUser` with `role`, `phone_number`, etc.).
+  - [x] `Student` (with `level`, `birth_date`, etc.).
+  - [x] `Center` (with `name`, `address`, etc.).
   - [ ] `Notification` (with `type`, `content`, etc.).
   - [ ] `Log` (with `action`, `timestamp`, etc.).
 - [ ] Generate migrations: `python manage.py makemigrations`.
@@ -40,7 +40,7 @@
 - [ ] Test notification sending for a sample event (e.g., student registration).
 
 ## Logging
-- [ ] Create a logging middleware in `app/middleware.py` to record user actions in the `Log` model.
+- [x] Create a logging middleware in `app/middleware.py` to record user actions in the `Log` model.
 - [ ] Add middleware to `project/settings.py` under `MIDDLEWARE`.
 - [ ] Test logging by performing actions (e.g., create student) and checking `Log` entries in the admin panel.
 

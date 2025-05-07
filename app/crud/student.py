@@ -38,3 +38,26 @@ def get_students_by_name(db: Session, name: str) -> List[Student]:
 def get_all_students(db: Session, skip: int = 0, limit: int = 100) -> List[Student]:
     """Get all students with pagination"""
     return db.query(Student).filter(Student.role == Role.student).offset(skip).limit(limit).all()
+
+def update_student(db: Session, student_id: int, updates: dict) -> Optional[Student]:
+    """Update a student's details"""
+    student = db.query(Student).filter(Student.id == student_id).first()
+    if not student:
+        return None
+
+    for key, value in updates.items():
+        setattr(student, key, value)
+
+    db.commit()
+    db.refresh(student)
+    return student
+
+def delete_student(db: Session, student_id: int) -> bool:
+    """Delete a student by their ID"""
+    student = db.query(Student).filter(Student.id == student_id).first()
+    if not student:
+        return False
+
+    db.delete(student)
+    db.commit()
+    return True

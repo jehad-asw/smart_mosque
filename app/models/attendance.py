@@ -22,8 +22,6 @@ class Attendance(Base):
     date = Column(Date, default=datetime.utcnow)
     status = Column(Enum(AttendanceStatus), default=AttendanceStatus.present)
     notes = Column(String, nullable=True)
-    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
-    updated_at = Column(String, default=lambda: datetime.utcnow().isoformat(), onupdate=lambda: datetime.utcnow().isoformat())
     
     # Relationships
     study_circle = relationship("StudyCircle", back_populates="attendance_records")

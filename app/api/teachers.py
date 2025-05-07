@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.teacher import TeacherCreate, Teacher, TeacherUpdate
 from app.crud import user as user_crud
+from app.crud import teacher as teacher_crud
 from app.models.user import Role
 from app.deps.db import get_db, get_current_user
 from fastapi.security import OAuth2PasswordBearer
@@ -33,3 +34,19 @@ def get_teacher_profile(
             detail="User is not a teacher"
         )
     return current_user
+
+
+@router.put("/teachers/{teacher_id}", response_model=Teacher)
+def update_existing_teacher(teacher_id: int, teacher: TeacherUpdate, db: Session = Depends(get_db)):
+    db_teacher = teacher_crud.update_teacher(db, teacher_id, teacher)
+    if not db_teacher:
+        raise HTTPException(status_code=404, detail="teacher not found")
+    return db_teacher
+
+
+@router.delete("/teachers/{teacher_id}", response_model=Teacher)
+def delete_existing_teacher(teacher_id: int, db: Session = Depends(get_db)):
+    db_teacher = teacher_crud.delete_teacher(db, teacher_id)
+    if not db_teacher:
+        raise HTTPException(status_code=404, detail="teacher not found")
+    return db_teacher
