@@ -27,8 +27,9 @@ def upgrade() -> None:
     if 'attendances' in inspector.get_table_names():
         op.drop_column('attendances', 'created_at')
         op.drop_column('attendances', 'updated_at')
-    op.drop_column('circle_students', 'created_at')
-    op.drop_column('circle_students', 'updated_at')
+    if 'circle_students' in inspector.get_table_names():
+        op.drop_column('circle_students', 'created_at')
+        op.drop_column('circle_students', 'updated_at')
     # ### end Alembic commands ###
 
 
