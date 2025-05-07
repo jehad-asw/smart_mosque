@@ -5,9 +5,9 @@ def run_alembic():
     print("Running Alembic revision and upgrade...")
 
     # Apply migrations
-    subprocess.run([
-        "alembic", "upgrade", "head"
-    ], check=True)
+    #subprocess.run([
+    #    "alembic", "upgrade", "head"
+    #], check=True)
 
     # Generate revision
     subprocess.run([
