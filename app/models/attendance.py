@@ -25,4 +25,4 @@ class Attendance(Base):
     
     # Relationships
     study_circle = relationship("StudyCircle", back_populates="attendance_records")
-    #student = relationship("Student", back_populates="attendances")
+    student = relationship("Student", back_populates="attendances")
