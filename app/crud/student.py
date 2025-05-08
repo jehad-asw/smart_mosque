@@ -22,9 +22,9 @@ def get_student_by_user(db: Session, user_id: int) -> Optional[Student]:
     """Get a student by user ID"""
     return db.query(Student).filter(Student.id == user_id).first()
 
-def get_student_by_id(db: Session, student_id: int) -> Optional[Student]:
+def get_student_by_id(db: Session, id: int) -> Optional[Student]:
     """Get a student by their ID"""
-    return db.query(Student).filter(Student.id == student_id).first()
+    return db.query(Student).filter(Student.id == id).first()
 
 def get_students_by_name(db: Session, name: str) -> List[Student]:
     """Search for students by name"""
@@ -39,9 +39,9 @@ def get_all_students(db: Session, skip: int = 0, limit: int = 100) -> List[Stude
     """Get all students with pagination"""
     return db.query(Student).filter(Student.role == Role.student).offset(skip).limit(limit).all()
 
-def update_student(db: Session, student_id: int, updates: dict) -> Optional[Student]:
+def update_student(db: Session, id: int, updates: dict) -> Optional[Student]:
     """Update a student's details"""
-    student = db.query(Student).filter(Student.id == student_id).first()
+    student = db.query(Student).filter(Student.id == id).first()
     if not student:
         return None
 
@@ -52,9 +52,9 @@ def update_student(db: Session, student_id: int, updates: dict) -> Optional[Stud
     db.refresh(student)
     return student
 
-def delete_student(db: Session, student_id: int) -> bool:
+def delete_student(db: Session, id: int) -> bool:
     """Delete a student by their ID"""
-    student = db.query(Student).filter(Student.id == student_id).first()
+    student = db.query(Student).filter(Student.id == id).first()
     if not student:
         return False
 

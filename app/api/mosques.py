@@ -19,9 +19,9 @@ def create_new_mosque(mosque: MosqueCreate, db: Session = Depends(get_db)):
     return create_mosque(db, mosque)
 
 
-@router.get("/{mosque_id}", response_model=Mosque)
-def get_mosque(mosque_id: int, db: Session = Depends(get_db)):
-    mosque = get_mosque_by_id(db, mosque_id)
+@router.get("/{id}", response_model=Mosque)
+def get_mosque(id: int, db: Session = Depends(get_db)):
+    mosque = get_mosque_by_id(db, id)
     if not mosque:
         raise HTTPException(status_code=404, detail="Mosque not found")
     return mosque
@@ -32,17 +32,17 @@ def get_all_mosques_endpoint(skip: int = 0, limit: int = 100, db: Session = Depe
     return get_all_mosques(db, skip=skip, limit=limit)
 
 
-@router.put("/{mosque_id}", response_model=Mosque)
-def update_existing_mosque(mosque_id: int, mosque: MosqueUpdate, db: Session = Depends(get_db)):
-    updated_mosque = update_mosque(db, mosque_id, mosque.dict(exclude_unset=True))
+@router.put("/{id}", response_model=Mosque)
+def update_existing_mosque(id: int, mosque: MosqueUpdate, db: Session = Depends(get_db)):
+    updated_mosque = update_mosque(db, id, mosque.dict(exclude_unset=True))
     if not updated_mosque:
         raise HTTPException(status_code=404, detail="Mosque not found")
     return updated_mosque
 
 
-@router.delete("/{mosque_id}", response_model=dict)
-def delete_existing_mosque(mosque_id: int, db: Session = Depends(get_db)):
-    success = delete_mosque(db, mosque_id)
+@router.delete("/{id}", response_model=dict)
+def delete_existing_mosque(id: int, db: Session = Depends(get_db)):
+    success = delete_mosque(db, id)
     if not success:
         raise HTTPException(status_code=404, detail="Mosque not found")
     return {"detail": "Mosque deleted successfully"}

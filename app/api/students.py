@@ -40,15 +40,15 @@ async def search_students(
         raise HTTPException(status_code=404, detail="No students found")
     return students
 
-@router.get("/{student_id}", response_model=Student)
+@router.get("/{id}", response_model=Student)
 async def get_student_by_id(
-    student_id: int,
+    id: int,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
     token: str = Depends(oauth2_scheme)
 ):
     """Get a student by ID"""
-    student = student_crud.get_student_by_id(db, student_id)
+    student = student_crud.get_student_by_id(db, id)
     if not student:
         raise HTTPException(status_code=404, detail="Student not found")
     return student
@@ -67,16 +67,16 @@ async def get_students(
         raise HTTPException(status_code=404, detail="No students found")
     return students
 
-@router.put("/students/{student_id}", response_model=Student)
-def update_existing_student(student_id: int, student: StudentUpdate, db: Session = Depends(get_db)):
-    db_student = student_crud.update_student(db, student_id, student)
+@router.put("/students/{id}", response_model=Student)
+def update_existing_student(id: int, student: StudentUpdate, db: Session = Depends(get_db)):
+    db_student = student_crud.update_student(db, id, student)
     if not db_student:
         raise HTTPException(status_code=404, detail="Student not found")
     return db_student
 
-@router.delete("/students/{student_id}", response_model=Student)
-def delete_existing_student(student_id: int, db: Session = Depends(get_db)):
-    db_student = student_crud.delete_student(db, student_id)
+@router.delete("/students/{id}", response_model=Student)
+def delete_existing_student(id: int, db: Session = Depends(get_db)):
+    db_student = student_crud.delete_student(db, id)
     if not db_student:
         raise HTTPException(status_code=404, detail="student not found")
     return db_student

@@ -8,9 +8,9 @@ from app.schemas.center import CenterCreate, CenterUpdate, Center
 router = APIRouter()
 
 
-@router.get("/centers/{center_id}", response_model=Center)
-def read_center(center_id: int, db: Session = Depends(get_db)):
-    db_center = get_center(db, center_id)
+@router.get("/centers/{id}", response_model=Center)
+def read_center(id: int, db: Session = Depends(get_db)):
+    db_center = get_center(db, id)
     if not db_center:
         raise HTTPException(status_code=404, detail="Center not found")
     return db_center
@@ -23,16 +23,16 @@ def read_centers(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 def create_new_center(center: CenterCreate, db: Session = Depends(get_db)):
     return create_center(db, center)
 
-@router.put("/centers/{center_id}", response_model=Center)
-def update_existing_center(center_id: int, center: CenterUpdate, db: Session = Depends(get_db)):
-    db_center = update_center(db, center_id, center)
+@router.put("/centers/{id}", response_model=Center)
+def update_existing_center(id: int, center: CenterUpdate, db: Session = Depends(get_db)):
+    db_center = update_center(db, id, center)
     if not db_center:
         raise HTTPException(status_code=404, detail="Center not found")
     return db_center
 
-@router.delete("/centers/{center_id}", response_model=Center)
-def delete_existing_center(center_id: int, db: Session = Depends(get_db)):
-    db_center = delete_center(db, center_id)
+@router.delete("/centers/{id}", response_model=Center)
+def delete_existing_center(id: int, db: Session = Depends(get_db)):
+    db_center = delete_center(db, id)
     if not db_center:
         raise HTTPException(status_code=404, detail="Center not found")
     return db_center
