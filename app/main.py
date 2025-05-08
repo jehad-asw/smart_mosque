@@ -5,8 +5,8 @@ from fastapi.security import OAuth2PasswordBearer
 from app.middleware.auth import AuthMiddleware
 from app.middleware.logging import LoggingMiddleware
 
-from app.api import auth, teachers, students, parents, centers
-from app.api.mosques import router as mosque_router
+from app.api import auth, teachers, students, parents, centers, attendance, mosques
+
 
 app = FastAPI(
     title="Smart Mosque API",
@@ -18,7 +18,8 @@ app = FastAPI(
         {"name": "Students", "description": "Operations with students"},
         {"name": "Parents", "description": "Operations with parents"},
         {"name": "Centers", "description": "Operations with centers"},
-        {"name": "Mosques", "description": "Operations with mosques"}
+        {"name": "Mosques", "description": "Operations with mosques"},
+        {"name": "Attendance", "description": "Operations with attendance"}
     ]
 )
 
@@ -51,7 +52,8 @@ app.include_router(teachers.router, prefix="/teachers", tags=["Teachers"])
 app.include_router(students.router, prefix="/students", tags=["Students"])
 app.include_router(parents.router, prefix="/parents", tags=["Parents"])
 app.include_router(centers.router, prefix="/centers", tags=["Centers"])
-app.include_router(mosque_router, prefix="/mosques", tags=["Mosques"])
+app.include_router(mosques.router, prefix="/mosques", tags=["Mosques"])
+app.include_router(attendance.router, prefix="/attendance", tags=["Attendance"])
 
 
 @app.get("/", tags=["Root"])
