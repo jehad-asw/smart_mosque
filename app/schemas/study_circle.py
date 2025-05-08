@@ -1,41 +1,26 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional, List
-from enum import Enum
 from datetime import date
+from app.models.study_circle import CircleType, CircleStatus
 
 
-class CircleType(str, Enum):
-    individual = "individual"
-    group = "group"
-
-
-class CircleStatus(str, Enum):
-    active = "active"
-    inactive = "inactive"
-    completed = "completed"
-    cancelled = "cancelled"
-
-
-class CircleBase(BaseModel):
-    """Base schema for Study Circle"""
+class StudyCircleBase(BaseModel):
     name: str
-    type: CircleType = CircleType.group
+    type: Optional[CircleType] = CircleType.group
     teacher_id: int
     center_id: int
     max_capacity: Optional[int] = None
     description: Optional[str] = None
     start_date: Optional[date] = None
     end_date: Optional[date] = None
-    status: CircleStatus = CircleStatus.active
+    status: Optional[CircleStatus] = CircleStatus.active
 
 
-class CircleCreate(CircleBase):
-    """Schema for creating a new study circle"""
+class StudyCircleCreate(StudyCircleBase):
     pass
 
 
-class CircleUpdate(BaseModel):
-    """Schema for updating an existing study circle"""
+class StudyCircleUpdate(BaseModel):
     name: Optional[str] = None
     type: Optional[CircleType] = None
     teacher_id: Optional[int] = None
@@ -47,8 +32,7 @@ class CircleUpdate(BaseModel):
     status: Optional[CircleStatus] = None
 
 
-class Circle(CircleBase):
-    """Schema for study circle information returned to clients"""
+class StudyCircle(StudyCircleBase):
     id: int
     created_at: str
     updated_at: str

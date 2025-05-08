@@ -14,8 +14,7 @@ from app.schemas.parent import ParentBase, ParentCreate, ParentUpdate, Parent
 from app.schemas.center import CenterBase, CenterCreate, CenterUpdate, Center, CenterStatus
 
 # Study Circle-related schemas
-from app.schemas.study_circle import CircleBase, CircleCreate, CircleUpdate, Circle, CircleType
-
+from app.schemas.study_circle import StudyCircleBase, CircleType, StudyCircleCreate, StudyCircleUpdate, StudyCircle
 # Association schemas
 from app.schemas.student_parent import StudentParentBase, StudentParentCreate, StudentParentUpdate, StudentParent
 from app.schemas.circle_student import CircleStudentBase, CircleStudentCreate, CircleStudentUpdate, CircleStudent
