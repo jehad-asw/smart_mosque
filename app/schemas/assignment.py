@@ -1,20 +1,20 @@
 from pydantic import BaseModel
 from datetime import date
 
-class TestBase(BaseModel):
+class AssignmentBase(BaseModel):
     student_id: int
     tester_id: int
     date: date
     result: str
     level: str
 
-class TestCreate(TestBase):
+class AssignmentCreate(AssignmentBase):
     pass
 
-class TestUpdate(TestBase):
+class AssignmentUpdate(AssignmentBase):
     pass
 
-class TestResponse(TestBase):
+class AssignmentResponse(AssignmentBase):
     id: int
 
     class Config:

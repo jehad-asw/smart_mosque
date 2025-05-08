@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from app.config.database import Base
 
-class Test(Base):
-    __tablename__ = 'tests'
+class Assignment(Base):
+    __tablename__ = 'assignments'
 
     id = Column(Integer, primary_key=True, index=True)
     student_id = Column(Integer, ForeignKey('students.student_id'), nullable=False)
