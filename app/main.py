@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.middleware.auth import AuthMiddleware
 from app.middleware.logging import LoggingMiddleware
 
-from app.api import auth, teachers, students, parents, centers, attendance, mosques, study_circle
+from app.api import attendances, auth, study_circles, teachers, students, parents, centers, mosques, assignments
 
 
 
@@ -20,8 +20,9 @@ app = FastAPI(
         {"name": "Parents", "description": "Operations with parents"},
         {"name": "Centers", "description": "Operations with centers"},
         {"name": "Mosques", "description": "Operations with mosques"},
-        {"name": "Attendance", "description": "Operations with attendance"},
-        {"name": "Study Circles", "description": "Operations with study circles"}
+        {"name": "Attendances", "description": "Operations with attendances"},
+        {"name": "Study Circles", "description": "Operations with study circles"},
+        {"name": "Assignments", "description": "Operations with Assignments"}
     ]
 )
 
@@ -55,8 +56,9 @@ app.include_router(students.router, prefix="/students", tags=["Students"])
 app.include_router(parents.router, prefix="/parents", tags=["Parents"])
 app.include_router(centers.router, prefix="/centers", tags=["Centers"])
 app.include_router(mosques.router, prefix="/mosques", tags=["Mosques"])
-app.include_router(attendance.router, prefix="/attendance", tags=["Attendance"])
-app.include_router(study_circle.router, prefix="/study-circles", tags=["Study Circles"])
+app.include_router(attendances.router, prefix="/attendances", tags=["Attendances"])
+app.include_router(study_circles.router, prefix="/study-circles", tags=["Study Circles"])
+app.include_router(assignments.router, prefix="/assignments", tags=["Assignments"])
 
 
 @app.get("/", tags=["Root"])
