@@ -15,6 +15,10 @@ def create_teacher(db: Session, user_id: int, teacher: TeacherCreate):
 def get_teacher_by_user(db: Session, user_id: int):
     return db.query(Teacher).filter(Teacher.user_id == user_id).first()
 
+def get_teacher_by_id(db: Session, teacher_id: int) -> Optional[Teacher]:
+    """Get a teacher by their ID"""
+    return db.query(Teacher).filter(Teacher.id == teacher_id).first()
+
 def update_teacher(db: Session, teacher_id: int, updates: dict) -> Optional[Teacher]:
     """Update a teacher's details"""
     teacher = db.query(Teacher).filter(Teacher.id == teacher_id).first()
