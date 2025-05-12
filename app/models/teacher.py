@@ -22,6 +22,7 @@ class Teacher(User):
     # Relationships
     center = relationship("Center", back_populates="teachers")
     study_circles = relationship("StudyCircle", back_populates="teacher")
+    mosques = relationship("Mosque", secondary="teacher_mosque", back_populates="teachers")
     
     __mapper_args__ = {
         'polymorphic_identity': 'teacher',

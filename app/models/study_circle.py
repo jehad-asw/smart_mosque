@@ -25,7 +25,7 @@ class StudyCircle(Base):
     name = Column(String, nullable=False)
     type = Column(Enum(CircleType), default=CircleType.group)
     teacher_id = Column(Integer, ForeignKey("teachers.id"))
-    center_id = Column(Integer, ForeignKey("centers.id"))
+    mosque_id = Column(Integer, ForeignKey("mosques.id"))
     max_capacity = Column(Integer, nullable=True)
     description = Column(Text, nullable=True)
     start_date = Column(Date, nullable=True)
@@ -36,7 +36,7 @@ class StudyCircle(Base):
 
     # Relationships
     teacher = relationship("Teacher", back_populates="study_circles")
-    center = relationship("Center", back_populates="study_circles")
-    students = relationship("CircleStudent", back_populates="study_circle")
+    mosque = relationship("Mosque", back_populates="study_circles")
+    students = relationship("Student", back_populates="preferred_circle")
     attendance_records = relationship("Attendance", back_populates="study_circle")
     schedules = relationship("Schedule", back_populates="study_circle")
