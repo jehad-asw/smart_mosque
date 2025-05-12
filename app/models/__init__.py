@@ -6,6 +6,6 @@ from app.models.center import Center, CenterStatus
 from app.models.mosque import Mosque
 from app.models.study_circle import StudyCircle, CircleType, CircleStatus
 from app.models.student_parent import StudentParent
-from app.models.circle_student import CircleStudent
+from app.models.circle_student import  CircleStudent, CircleStudentStatus
 from app.models.attendance import Attendance, AttendanceStatus
 from app.models.schedule import Schedule, DayOfWeek

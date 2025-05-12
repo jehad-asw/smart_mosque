@@ -37,6 +37,6 @@ class StudyCircle(Base):
     # Relationships
     teacher = relationship("Teacher", back_populates="study_circles")
     mosque = relationship("Mosque", back_populates="study_circles")
-    students = relationship("Student", back_populates="preferred_circle")
+    students = relationship("CircleStudent", back_populates="study_circle")
     attendance_records = relationship("Attendance", back_populates="study_circle")
     schedules = relationship("Schedule", back_populates="study_circle")

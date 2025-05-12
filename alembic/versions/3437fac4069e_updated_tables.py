@@ -51,10 +51,7 @@ def upgrade() -> None:
     op.alter_column('circle_students', 'student_id',
                existing_type=sa.INTEGER(),
                nullable=False)
-    op.alter_column('circle_students', 'status',
-               existing_type=sa.VARCHAR(),
-               type_=sa.Enum('active', 'inactive', 'graduated', name='circlestudentstatus'),
-               existing_nullable=True)
+    
     op.create_index(op.f('ix_circle_students_circle_id'), 'circle_students', ['circle_id'], unique=False)
     op.create_index(op.f('ix_circle_students_student_id'), 'circle_students', ['student_id'], unique=False)
     op.create_unique_constraint('uq_circle_student', 'circle_students', ['circle_id', 'student_id'])

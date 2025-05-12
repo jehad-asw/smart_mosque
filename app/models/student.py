@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, ForeignKey, String, Date, Enum, Text
+from sqlalchemy import Column, Integer, ForeignKey, String, Date, Enum, Text, and_, text
 from sqlalchemy.orm import relationship
+from app.models.attendance import Attendance
 from app.models.user import User
 import enum
 from datetime import date, datetime
@@ -36,16 +37,15 @@ class Student(User):
     emergency_contact = Column(String, nullable=True)
     medical_conditions = Column(Text, nullable=True)
     registration_date = Column(Date, default=datetime.utcnow)
-    preferred_circle_id = Column(Integer, ForeignKey("study_circles.id"), nullable=True)
     previous_education = Column(String, nullable=True)
 
     # Relationships
     center = relationship("Center", back_populates="students")
-    preferred_circle = relationship("StudyCircle", back_populates="students")
     student_circles = relationship("CircleStudent", back_populates="student")
     attendances = relationship("Attendance", back_populates="student")
     student_parents = relationship("StudentParent", back_populates="student")
     mosques = relationship("Mosque", secondary="student_mosque", back_populates="students")
+    assignments = relationship("Assignment", back_populates="student")
 
     __mapper_args__ = {
         'polymorphic_identity': 'student',

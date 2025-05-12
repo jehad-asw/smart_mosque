@@ -29,4 +29,3 @@ class Center(Base):
     teachers = relationship("Teacher", back_populates="center", foreign_keys="[Teacher.center_id]")
     students = relationship("Student", back_populates="center", foreign_keys="[Student.center_id]")
     mosques = relationship("Mosque", back_populates="center")
-    study_circles = relationship("StudyCircle", back_populates="center", foreign_keys="[StudyCircle.center_id]")

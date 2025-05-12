@@ -28,3 +28,4 @@ class Mosque(Base):
     teachers = relationship("Teacher", secondary=teacher_mosque_association, back_populates="mosques")
     students = relationship("Student", secondary=student_mosque_association, back_populates="mosques")
     study_circles = relationship("StudyCircle", back_populates="mosque")
+    attendance_records = relationship("Attendance", back_populates="mosque")
