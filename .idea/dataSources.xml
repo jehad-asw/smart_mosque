@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/smartmosque</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="prod-db" uuid="afed3c31-5ae7-4906-8d53-7913b27b5fa2">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://dpg-d0dn5eh5pdvs739ceso0-a.oregon-postgres.render.com/smart_mosque_a9ou</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
