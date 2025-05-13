@@ -25,7 +25,7 @@ def upgrade() -> None:
     op.add_column('attendances', sa.Column('teacher_id', sa.Integer(), nullable=True))
     op.create_foreign_key(None, 'attendances', 'students', ['student_id'], ['id'])
     op.create_foreign_key(None, 'attendances', 'teachers', ['teacher_id'], ['id'])
-    op.drop_column('attendances', 'user_id')
+   
     
     # ### end Alembic commands ###
 
