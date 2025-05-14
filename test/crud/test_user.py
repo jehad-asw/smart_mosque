@@ -1,6 +1,6 @@
 from pytest import Session
 import pytest
-from app.crud.user import update_user
+from app.services.user import update_user
 from app.models.user import User
 from app.schemas.user import UserUpdate
 

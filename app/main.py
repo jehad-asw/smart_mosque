@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.middleware.auth import AuthMiddleware
 from app.middleware.logging import LoggingMiddleware
 
-from app.api import attendances, auth, study_circles, teachers, students, parents, centers, mosques, assignments
+from app.api import attendances, auth, study_circles, teachers, students, parents, centers, mosques, assignments, dashboard
 
 
 
@@ -59,6 +59,7 @@ app.include_router(mosques.router, prefix="/mosques", tags=["Mosques"])
 app.include_router(attendances.router, prefix="/attendances", tags=["Attendances"])
 app.include_router(study_circles.router, prefix="/study-circles", tags=["Study Circles"])
 app.include_router(assignments.router, prefix="/assignments", tags=["Assignments"])
+app.include_router(dashboard.router, prefix="", tags=["Dashboard"])
 
 
 @app.get("/", tags=["Root"])

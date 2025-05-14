@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.mosque import Mosque, MosqueCreate, MosqueUpdate
-from app.crud.mosque import (
+from app.services.mosque import (
     create_mosque,
     get_mosque_by_id,
     get_all_mosques,

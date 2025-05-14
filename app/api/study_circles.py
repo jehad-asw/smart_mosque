@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.study_circle import StudyCircleCreate, StudyCircleUpdate, StudyCircle
-from app.crud.study_circle import (
+from app.services.study_circle import (
     create_study_circle,
     get_study_circle_by_id,
     get_all_study_circles,

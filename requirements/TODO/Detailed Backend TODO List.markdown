@@ -16,11 +16,11 @@
   - [x] `Teacher`
   - [x] `Student`
   - [ ] `Staff`
-  - [ ] `Parent`
-  - [ ] `StudyCircle`
-  - [ ] `CircleStudent`
-  - [ ] `Attendance`
-  - [ ] `Test`
+  - [x] `Parent`
+  - [x] `StudyCircle`
+  - [x] `CircleStudent`
+  - [x] `Attendance`
+  - [x] `Test`
   - [ ] `TestRequest`
   - [ ] `Subscription`
   - [ ] `Salary`
@@ -45,10 +45,12 @@
   - [x] `/api/students/` (CRUD)
   - [ ] `/api/staff/` (CRUD)
   - [ ] `/api/parents/` (CRUD)
-  - [ ] `/api/study-circles/` (CRUD)
-  - [ ] `/api/circle-students/` (CRUD)
-  - [ ] `/api/attendance/` (CRUD)
-  - [ ] `/api/tests/` (CRUD)
+  - [x] `/api/study-circles/` (CRUD)
+  - [??] `/api/circle-students/` (CRUD)
+  - [x] `/api/attendance/` (CRUD)
+  - [x] `/api/assignments/` (CRUD)
+  - [x] `/api/centers/` (CRUD)
+  - [x] `/api/mosques/` (CRUD)
   - [ ] `/api/test-requests/` (CRUD)
   - [ ] `/api/subscriptions/` (CRUD)
   - [ ] `/api/salaries/` (CRUD)

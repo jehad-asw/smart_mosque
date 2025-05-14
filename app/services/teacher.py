@@ -41,3 +41,7 @@ def delete_teacher(db: Session, teacher_id: int) -> bool:
     db.delete(teacher)
     db.commit()
     return True
+
+def get_teachers_by_center_name(db: Session, center_name: str):
+    """Get all teachers by center name"""
+    return db.query(Teacher).join(Teacher.center).filter(Teacher.center.has(name=center_name)).all()

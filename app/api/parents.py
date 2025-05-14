@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.parent import ParentCreate, Parent, ParentUpdate
-from app.crud import user as user_crud
+from app.services import user as user_crud
 from app.models.user import Role
 from app.deps.db import get_db, get_current_user
 from fastapi.security import OAuth2PasswordBearer

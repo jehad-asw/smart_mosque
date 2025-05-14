@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from app.models.student import Student
 from app.schemas.student import StudentCreate
-from app.crud.user import create_user_with_role
+from app.services.user import create_user_with_role
 from app.models.user import Role
 from typing import List, Optional
 

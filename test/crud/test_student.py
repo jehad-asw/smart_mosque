@@ -1,7 +1,7 @@
 from datetime import date
 import pytest
 from sqlalchemy.orm import Session
-from app.crud.student import create_student, get_student_by_user
+from app.services.student import create_student, get_student_by_user
 from app.models.student import ExemptionStatus, Gender, Student
 from app.schemas.student import StudentCreate
 from sqlalchemy import create_engine

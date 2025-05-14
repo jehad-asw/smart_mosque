@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from app.crud.center import get_center, get_centers, create_center, update_center, delete_center
+from app.services.center import get_center, get_centers, create_center, update_center, delete_center
 from app.deps.db import get_db
 from app.schemas.center import CenterCreate, CenterUpdate, Center
 

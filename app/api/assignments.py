@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.schemas.assignment import AssignmentCreate, AssignmentUpdate, AssignmentResponse
-from app.crud.assignment import create_assignment, update_assignment, delete_assignment, get_all_assignments, get_assignment_by_id
+from app.services.assignment import create_assignment, update_assignment, delete_assignment, get_all_assignments, get_assignment_by_id
 from app.deps.db import get_db
 
 router = APIRouter()

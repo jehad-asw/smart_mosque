@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy.orm import Session
 from app.models.teacher import Teacher
 from app.schemas.teacher import TeacherCreate
-from app.crud.teacher import create_teacher, get_teacher_by_user
+from app.services.teacher import create_teacher, get_teacher_by_user
 
 def test_create_teacher(db_session: Session):
 

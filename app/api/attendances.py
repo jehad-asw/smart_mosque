@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.attendance import AttendanceCreate, AttendanceUpdate, Attendance
-from app.crud.attendance import (
+from app.services.attendance import (
     create_attendance,
     get_attendance_by_id,
     get_attendance_records,

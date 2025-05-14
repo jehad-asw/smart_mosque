@@ -4,7 +4,7 @@ import pytest
 from app.api.students import router
 from app.models.user import Role, User 
 from app.schemas.student import Student
-from app.crud import student as student_crud
+from app.services import student as student_crud
 from app.deps.db import get_current_user, get_db
 from datetime import datetime, timezone, timedelta
 from jose import jwt
