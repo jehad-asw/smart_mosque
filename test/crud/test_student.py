@@ -40,7 +40,6 @@ def test_create_student(db_session: Session):
         emergency_contact="987-654-3210",
         medical_conditions="None",
         registration_date=date(2025, 4, 1),
-        preferred_circle_id=2,
         previous_education="High School"
     )
     created_student = create_student(db_session, user_id, student_data)
@@ -78,7 +77,6 @@ def test_get_student_by_user(db_session: Session):
         emergency_contact="987-654-3210",
         medical_conditions="None",
         registration_date=date(2025, 4, 1),
-        preferred_circle_id=2,
         previous_education="High School"
     )
     create_student(db_session, user_id, student_data)

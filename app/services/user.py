@@ -82,7 +82,6 @@ def create_student(db: Session, user_data: UserCreate, student_data: dict) -> St
         "emergency_contact":student_data.get('emergency_contact'),
         "medical_conditions":student_data.get('medical_conditions'),
         "registration_date":student_data.get('registration_date'),
-        "preferred_circle_id":student_data.get('preferred_circle_id'),
         "previous_education":student_data.get('previous_education')
     }
     return create_user_with_role(db, user_data, Role.student, db_student)

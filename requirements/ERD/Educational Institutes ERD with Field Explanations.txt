@@ -69,7 +69,6 @@ erDiagram
         string emergency_contact %% Stores additional contact for emergency situations
         string medical_conditions %% Stores health issues or allergies for student safety
         date registration_date %% Records the date the student enrolled for tracking
-        int preferred_circle_id FK %% Links to the preferred study circle for enrollment
         string previous_education %% Stores prior Quranic or academic background for placement
     }
 

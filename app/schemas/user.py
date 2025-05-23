@@ -39,7 +39,6 @@ class UserBase(BaseModel):
     username: str
     firstname: str
     lastname: str
-    role: Role
     phone_number: Optional[str] = None
     address: Optional[str] = None
     notification_preference: NotificationPreference = NotificationPreference.email

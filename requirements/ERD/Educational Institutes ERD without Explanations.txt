@@ -70,7 +70,6 @@ erDiagram
         string emergency_contact
         string medical_conditions
         date registration_date
-        int preferred_circle_id FK
         string previous_education
     }
 

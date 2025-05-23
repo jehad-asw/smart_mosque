@@ -48,7 +48,7 @@ student_data = {
     "emergency_contact": "+1234567893",
     "medical_conditions": "None",
     "registration_date": datetime.now().strftime("%Y-%m-%d"),
-    "preferred_circle_id": None,
+    
     "previous_education": "Elementary School"
 }
 

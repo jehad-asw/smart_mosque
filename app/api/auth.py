@@ -98,7 +98,6 @@ def register_student(student: StudentCreate, db: Session = Depends(get_db)):
         "emergency_contact": student.emergency_contact,
         "medical_conditions": student.medical_conditions,
         "registration_date": student.registration_date,
-        "preferred_circle_id": student.preferred_circle_id,
         "previous_education": student.previous_education
     }
     

@@ -44,7 +44,7 @@ def create_mock_student(
     mock_student.emergency_contact = None
     mock_student.medical_conditions = None
     mock_student.registration_date = None
-    mock_student.preferred_circle_id = None
+
     mock_student.previous_education = None
 
     # Add model-to-dict conversion for response serialization
@@ -74,7 +74,7 @@ def create_mock_student(
         "emergency_contact": mock_student.emergency_contact,
         "medical_conditions": mock_student.medical_conditions,
         "registration_date": mock_student.registration_date,
-        "preferred_circle_id": mock_student.preferred_circle_id,
+        
         "previous_education": mock_student.previous_education
     }
     
